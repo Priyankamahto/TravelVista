@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Restaurants | WonderVista</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* Base Styles */
+        :root {
+            --primary-color: #ff6b6b;
+            --secondary-color: #4ecdc4;
+            --dark-color: #292f36;
+            --light-color: #f7fff7;
+            --accent-color: #ff9f1c;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f5f5f5;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        /* Navigation */
+        .navbar {
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-links li {
+            margin: 0 1rem;
+        }
+
+        .nav-links a {
+            padding: 0.5rem;
+            font-weight: 500;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-color);
+        }
+
+        .nav-links .active a {
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--primary-color);
+        }
+
+        .auth-buttons .login-btn {
+            background-color: transparent;
+            border: 1px solid var(--primary-color);
+            color: var(--primary-color);
+            margin-right: 0.5rem;
+        }
+
+        .auth-buttons .signup-btn {
+            background-color: var(--primary-color);
+            border: 1px solid var(--primary-color);
+            color: white;
+        }
+
+        .menu-toggle {
+            display: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Page Header */
+        .page-header {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 4rem 2rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .page-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .page-header p {
+            max-width: 700px;
+            margin: 0 auto 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .search-container {
+            max-width: 600px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 1rem;
+            border-radius: 50px;
+            border: none;
+            font-size: 1rem;
+            padding-left: 3rem;
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #666;
+        }
+
+        .filter-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 0.5rem 1.5rem;
+            background-color: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+        }
+
+        .filter-btn:hover,
+        .filter-btn.active {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+
+        /* Restaurants Container */
+        .restaurants-container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .restaurants-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .restaurant-card {
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.5s forwards;
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .restaurant-image {
+            height: 200px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .restaurant-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .restaurant-card:hover .restaurant-image img {
+            transform: scale(1.1);
+        }
+
+        .restaurant-badge {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .restaurant-content {
+            padding: 1.5rem;
+        }
+
+        .restaurant-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+        }
+
+        .restaurant-name {
+            font-size: 1.25rem;
+            font-weight: 700;
+        }
+
+        .restaurant-rating {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+            color: var(--accent-color);
+            font-weight: 600;
+        }
+
+        .restaurant-meta {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .restaurant-meta span {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        .restaurant-description {
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .restaurant-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .view-btn {
+            padding: 0.5rem 1.5rem;
+            background-color: var(--primary-color);
+            color: white;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .view-btn:hover {
+            background-color: var(--dark-color);
+        }
+
+        .save-btn {
+            background: none;
+            border: none;
+            font-size: 1.25rem;
+            color: #ddd;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .save-btn.saved {
+            color: var(--accent-color);
+        }
+
+        .load-more {
+            text-align: center;
+            margin: 3rem 0;
+        }
+
+        .load-more-btn {
+            padding: 0.75rem 2rem;
+            background-color: var(--dark-color);
+            color: white;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+
+        .load-more-btn:hover {
+            background-color: var(--primary-color);
+        }
+
+        /* Footer */
+        .footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 3rem 0 1rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 1.5rem;
+            font-size: 1.2rem;
+        }
+
+        .footer-section.about p {
+            margin-bottom: 1rem;
+        }
+
+        .footer-section.links ul {
+            list-style: none;
+        }
+
+        .footer-section.links li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-section.links a:hover {
+            color: var(--primary-color);
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .social-icons a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+
+        .social-icons a:hover {
+            background-color: var(--primary-color);
+            transform: translateY(-3px);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding: 1.5rem 0 0;
+            margin-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Responsive */
+        @media (max-width: 992px) {
+            .restaurants-grid {
+                grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            }
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 1rem;
+            }
+
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 70px;
+                left: 0;
+                right: 0;
+                background-color: white;
+                flex-direction: column;
+                padding: 1rem;
+                box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .nav-links li {
+                margin: 0.5rem 0;
+            }
+
+            .menu-toggle {
+                display: block;
+            }
+
+            .page-header {
+                padding: 3rem 1rem;
+            }
+
+            .page-header h1 {
+                font-size: 2rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .restaurants-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .filter-buttons {
+                gap: 0.5rem;
+            }
+
+            .filter-btn {
+                padding: 0.5rem 1rem;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="logo">🌍 WonderVista</div>
+        <div class="menu-toggle">
+            <i class="fas fa-bars"></i>
+        </div>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="destination.html">Destinations</a></li>
+            <li><a href="shopping.html">Shopping</a></li>
+            <li class="active"><a href="restaurants.html">Restaurants</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="contact.html">Contact</a></li>
+        </ul>
+        <div class="nav-right">
+            <div class="auth-buttons">
+                <a href="login.html" class="btn login-btn">Login</a>
+                <a href="signup.html" class="btn signup-btn">Sign Up</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <header class="page-header">
+        <h1>Discover Amazing Restaurants</h1>
+        <p>Find the best dining experiences in your city with authentic cuisines from around the world</p>
+
+        <div class="search-container">
+            <i class="fas fa-search search-icon"></i>
+            <input type="text" class="search-input" placeholder="Search for restaurants, cuisines, or locations...">
+        </div>
+
+        <div class="filter-buttons">
+            <button class="filter-btn active">All</button>
+            <button class="filter-btn">Italian</button>
+            <button class="filter-btn">Asian</button>
+            <button class="filter-btn">Mediterranean</button>
+            <button class="filter-btn">American</button>
+            <button class="filter-btn">Indian</button>
+        </div>
+    </header>
+
+    <!-- Restaurants Container -->
+    <div class="restaurants-container">
+        <div class="restaurants-grid" id="restaurantsGrid">
+            <!-- Restaurant cards will be added here by JavaScript -->
+        </div>
+
+        <div class="load-more">
+            <button class="load-more-btn" id="loadMoreBtn">Load More Restaurants</button>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section about">
+                <h3>About WonderVista</h3>
+                <p>Discover the world's most amazing culinary experiences with our expert food guides.</p>
+            </div>
+            <div class="footer-section links">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#">Food Guides</a></li>
+                    <li><a href="#">Special Offers</a></li>
+                    <li><a href="#">Popular Cuisines</a></li>
+                    <li><a href="#">Food Blog</a></li>
+                    <li><a href="#">FAQs</a></li>
+                </ul>
+            </div>
+            <div class="footer-section social">
+                <h3>Follow Us</h3>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-pinterest"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2023 WonderVista. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Restaurant data
+        const restaurants = [
+            {
+                id: 1,
+                name: "La Bella Vita",
+                cuisine: "Italian",
+                location: "Rome",
+                rating: 4.7,
+                reviews: 215,
+                priceRange: "$$$",
+                description: "Authentic Italian cuisine with homemade pasta and wood-fired pizzas. Our recipes have been passed down through generations.",
+                image: "https://images.unsplash.com/photo-1533777324565-a040eb52facd?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+                isVerified: true,
+                addedBy: "owner"
+            },
+            {
+                id: 2,
+                name: "Sakura Garden",
+                cuisine: "Asian",
+                location: "Tokyo",
+                rating: 4.5,
+                reviews: 184,
+                priceRange: "$$",
+                description: "Experience the exotic flavors of Asia with our carefully crafted dishes. From spicy curries to delicate sushi.",
+                image: "https://images.unsplash.com/photo-1551504734-5ee1c4a1479b?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+                isVerified: true,
+                addedBy: "visitor"
+            },
+            {
+                id: 3,
+                name: "Mediterranean Breeze",
+                cuisine: "Mediterranean",
+                location: "Athens",
+                rating: 4.3,
+                reviews: 132,
+                priceRange: "$$",
+                description: "Savor the fresh and healthy Mediterranean diet with our olive oil-based dishes and fresh seafood.",
+                image: "https://images.unsplash.com/photo-1510626176961-4b57d4fbad03?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+                isVerified: false,
+                addedBy: "owner"
+            },
+            {
+                id: 4,
+                name: "Urban Grill",
+                cuisine: "American",
+                location: "New York",
+                rating: 4.2,
+                reviews: 156,
+                priceRange: "$$",
+                description: "Classic American comfort food with a modern twist. Our generous portions and quality ingredients make every meal satisfying.",
+                image: "https://images.unsplash.com/photo-1559847844-5315695dadae?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+                isVerified: true,
+                addedBy: "visitor"
+            },
+            {
+                id: 5,
+                name: "Spice Route",
+                cuisine: "Indian",
+                location: "Mumbai",
+                rating: 4.6,
+                reviews: 198,
+                priceRange: "$$",
+                description: "Rich and aromatic Indian cuisine featuring traditional spices and cooking techniques. Our tandoor oven produces the most tender meats.",
+                image: "https://images.unsplash.com/photo-1585937421612-70a008356fbe?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+                isVerified: true,
+                addedBy: "owner"
+            },
+            {
+                id: 6,
+                name: "Golden Dragon",
+                cuisine: "Asian",
+                location: "Beijing",
+                rating: 4.4,
+                reviews: 167,
+                priceRange: "$$$",
+                description: "Traditional Chinese cuisine prepared with authentic techniques and the freshest ingredients imported weekly.",
+                image: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+                isVerified: true,
+                addedBy: "visitor"
+            },
+            {
+                id: 7,
+                name: "Olive & Vine",
+                cuisine: "Italian",
+                location: "Florence",
+                rating: 4.8,
+                reviews: 231,
+                priceRange: "$$$$",
+                description: "Award-winning Italian restaurant featuring seasonal ingredients and an extensive wine list from local vineyards.",
+                image: "https://images.unsplash.com/photo-1551218808-94e220e084d2?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+                isVerified: true,
+                addedBy: "owner"
+            },
+            {
+                id: 8,
+                name: "The Hungry Bear",
+                cuisine: "American",
+                location: "Chicago",
+                rating: 4.1,
+                reviews: 142,
+                priceRange: "$$",
+                description: "Hearty American classics with a focus on locally-sourced ingredients and craft beers from regional breweries.",
+                image: "https://images.unsplash.com/photo-1544025162-d76694265947?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+                isVerified: false,
+                addedBy: "visitor"
+            }
+        ];
+
+        // DOM Elements
+        const restaurantsGrid = document.getElementById('restaurantsGrid');
+        const loadMoreBtn = document.getElementById('loadMoreBtn');
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        const searchInput = document.querySelector('.search-input');
+
+        // Mobile menu toggle
+        const menuToggle = document.querySelector('.menu-toggle');
+        const navLinks = document.querySelector('.nav-links');
+
+        menuToggle.addEventListener('click', function () {
+            navLinks.classList.toggle('active');
+        });
+
+        // Initial display
+        let currentIndex = 0;
+        const batchSize = 4;
+        let filteredRestaurants = [...restaurants];
+
+        // Function to create restaurant card HTML
+        function createRestaurantCard(restaurant) {
+            return `
+                <div class="restaurant-card" data-id="${restaurant.id}" data-cuisine="${restaurant.cuisine.toLowerCase()}">
+                    <div class="restaurant-image">
+                        <img src="${restaurant.image}" alt="${restaurant.name}">
+                        ${restaurant.isVerified ? '<div class="restaurant-badge"><i class="fas fa-check-circle"></i> Verified</div>' : ''}
+                    </div>
+                    <div class="restaurant-content">
+                        <div class="restaurant-header">
+                            <h3 class="restaurant-name">${restaurant.name}</h3>
+                            <div class="restaurant-rating">
+                                <i class="fas fa-star"></i> ${restaurant.rating}
+                            </div>
+                        </div>
+                        <div class="restaurant-meta">
+                            <span><i class="fas fa-map-marker-alt"></i> ${restaurant.location}</span>
+                            <span><i class="fas fa-utensils"></i> ${restaurant.cuisine}</span>
+                            <span><i class="fas fa-dollar-sign"></i> ${restaurant.priceRange}</span>
+                        </div>
+                        <p class="restaurant-description">${restaurant.description}</p>
+                        <div class="restaurant-footer">
+                            <a href="restaurant-details.html?id=${restaurant.id}" class="view-btn">View Details</a>
+                            <button class="save-btn"><i class="far fa-bookmark"></i></button>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Function to display restaurants with animation
+        function displayRestaurants(restaurantsToShow) {
+            restaurantsToShow.forEach((restaurant, index) => {
+                setTimeout(() => {
+                    const card = document.createElement('div');
+                    card.innerHTML = createRestaurantCard(restaurant);
+                    restaurantsGrid.appendChild(card);
+
+                    // Add save button functionality
+                    const saveBtn = card.querySelector('.save-btn');
+                    saveBtn.addEventListener('click', function () {
+                        this.classList.toggle('saved');
+                        this.innerHTML = this.classList.contains('saved') ?
+                            '<i class="fas fa-bookmark"></i>' : '<i class="far fa-bookmark"></i>';
+                    });
+                }, index * 150); // Staggered animation
+            });
+        }
+
+        // Function to load more restaurants
+        function loadMoreRestaurants() {
+            const nextBatch = filteredRestaurants.slice(currentIndex, currentIndex + batchSize);
+            displayRestaurants(nextBatch);
+            currentIndex += batchSize;
+
+            // Hide load more button if all restaurants are displayed
+            if (currentIndex >= filteredRestaurants.length) {
+                loadMoreBtn.style.display = 'none';
+            }
+        }
+
+        // Function to filter restaurants
+        function filterRestaurants(cuisine = 'all', searchTerm = '') {
+            restaurantsGrid.innerHTML = '';
+            currentIndex = 0;
+
+            filteredRestaurants = restaurants.filter(restaurant => {
+                const matchesCuisine = cuisine === 'all' || restaurant.cuisine.toLowerCase() === cuisine;
+                const matchesSearch = restaurant.name.toLowerCase().includes(searchTerm) ||
+                    restaurant.location.toLowerCase().includes(searchTerm) ||
+                    restaurant.cuisine.toLowerCase().includes(searchTerm) ||
+                    restaurant.description.toLowerCase().includes(searchTerm);
+                return matchesCuisine && matchesSearch;
+            });
+
+            // Show load more button if there are more restaurants to show
+            loadMoreBtn.style.display = filteredRestaurants.length > batchSize ? 'block' : 'none';
+
+            // Load initial batch
+            loadMoreRestaurants();
+        }
+
+        // Event listeners
+        loadMoreBtn.addEventListener('click', loadMoreRestaurants);
+
+        filterButtons.forEach(button => {
+            button.addEventListener('click', function () {
+                filterButtons.forEach(btn => btn.classList.remove('active'));
+                this.classList.add('active');
+                const cuisine = this.textContent === 'All' ? 'all' : this.textContent.toLowerCase();
+                filterRestaurants(cuisine, searchInput.value.toLowerCase());
+            });
+        });
+
+        searchInput.addEventListener('input', function () {
+            const activeFilter = document.querySelector('.filter-btn.active');
+            const cuisine = activeFilter.textContent === 'All' ? 'all' : activeFilter.textContent.toLowerCase();
+            filterRestaurants(cuisine, this.value.toLowerCase());
+        });
+
+        // Initialize
+        filterRestaurants();
+    </script>
+</body>
+
+</html>

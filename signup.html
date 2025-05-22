@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up | WonderVista</title>
+    <link rel="stylesheet" href="expstyle.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="logo">🌍 WonderVista</div>
+        <div class="menu-toggle">
+            <i class="fas fa-bars"></i>
+        </div>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="destination.html">Destinations</a></li>
+            <li><a href="shopping.html">Shopping</a></li>
+            <li><a href="restaurants.html">Restaurants</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="contact.html">Contact</a></li>
+        </ul>
+        <div class="auth-buttons">
+            <a href="login.html" class="btn login-btn">Login</a>
+            <a href="signup.html" class="btn signup-btn">Sign Up</a>
+        </div>
+    </nav>
+
+    <!-- Signup Container -->
+    <section class="auth-container">
+        <div class="auth-form">
+            <h2>Create Your WonderVista Account</h2>
+            <form id="signupForm">
+                <div class="form-group">
+                    <label for="fullName">Full Name</label>
+                    <input type="text" id="fullName" required placeholder="Enter your full name">
+                </div>
+
+                <div class="form-group">
+                    <label for="signupEmail">Email</label>
+                    <input type="email" id="signupEmail" required placeholder="Enter your email">
+                </div>
+
+                <div class="form-group">
+                    <label for="signupPassword">Password</label>
+                    <input type="password" id="signupPassword" required placeholder="Create password">
+                </div>
+
+                <div class="form-group">
+                    <label for="confirmPassword">Confirm Password</label>
+                    <input type="password" id="confirmPassword" required placeholder="Confirm password">
+                </div>
+
+                <div class="form-group">
+                    <label for="userType">Account Type</label>
+                    <select id="userType" required>
+                        <option value="">Select Account Type</option>
+                        <option value="admin">Admin</option>
+                        <option value="traveler">Traveler</option>
+                        <option value="business">Business Owner</option>
+                    </select>
+                </div>
+
+                <div class="form-group business-type" style="display: none;">
+                    <label for="businessType">Business Category</label>
+                    <select id="businessType">
+                        <option value="hotel">Hotel/Restaurant</option>
+                        <option value="shop">Retail Shop</option>
+                        <option value="guide">Tour Guide Service</option>
+                        <option value="transport">Transport Service</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="location">Location Details</label>
+                    <div class="location-group">
+                        <input type="text" id="location" readonly placeholder="Click to get location">
+                        <button type="button" class="btn location-btn" id="getLocation">
+                            <i class="fas fa-map-marker-alt"></i> Detect Location
+                        </button>
+                    </div>
+                </div>
+
+                <div class="address-details" style="display: none;">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="city">City</label>
+                            <input type="text" id="city" required readonly>
+                        </div>
+                        <div class="form-group">
+                            <label for="state">State</label>
+                            <input type="text" id="state" required readonly>
+                        </div>
+                        <div class="form-group">
+                            <label for="pincode">Postal Code</label>
+                            <input type="text" id="pincode" required readonly>
+                        </div>
+                        <div class="form-group">
+                            <label for="country">Country</label>
+                            <input type="text" id="country" required readonly>
+                        </div>
+                    </div>
+                    <input type="hidden" id="latitude">
+                    <input type="hidden" id="longitude">
+                </div>
+
+
+                <div class="form-group terms">
+                    <input type="checkbox" id="terms" required>
+                    <label for="terms">I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy
+                            Policy</a></label>
+                </div>
+
+                <button type="submit" class="btn signup-btn">Create Account</button>
+
+                <p class="auth-switch">Already have an account? <a href="login.html">Login</a></p>
+            </form>
+        </div>
+    </section>
+
+    <!-- Firebase and Scripts -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <script src="expscript.js"></script>
+</body>
+
+</html>

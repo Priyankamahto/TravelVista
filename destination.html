@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Indian Destinations | WonderVista</title>
+    <link rel="stylesheet" href="destination.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="logo">🌍 WonderVista</div>
+        <div class="menu-toggle">
+            <i class="fas fa-bars"></i>
+        </div>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li class="active"><a href="destination.html">Destinations</a></li>
+            <li><a href="shopping.html">Shopping</a></li>
+            <li><a href="restaurants.html">Restaurants</a></li>
+        </ul>
+        <div class="nav-right">
+            <div class="search-container">
+                <div class="search-box">
+                    <input type="text" id="searchInput" placeholder="Search destinations..."
+                        aria-label="Search destinations">
+                    <button id="searchButton"><i class="fas fa-search"></i></button>
+                    <div class="search-suggestions" id="searchSuggestions"></div>
+                </div>
+                <button class="btn geo-btn" id="geoLocation" aria-label="Find nearby destinations">
+                    <i class="fas fa-map-marker-alt"></i> Near Me
+                </button>
+            </div>
+            <div class="auth-buttons">
+                <a href="login.html" class="btn login-btn" id="loginBtn">Login</a>
+                <a href="signup.html" class="btn signup-btn" id="signupBtn">Sign Up</a>
+                <div class="user-profile" id="userProfile" style="display: none;">
+                    <span id="usernameDisplay"></span>
+                    <button class="btn logout-btn" id="logoutBtn">Logout</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+    
+
+    <div class="filters">
+        <button class="filter-btn active" data-filter="all">All</button>
+        <button class="filter-btn" data-filter="historical">Historical</button>
+        <button class="filter-btn" data-filter="beach">Beaches</button>
+        <button class="filter-btn" data-filter="mountain">Mountains</button>
+        <button class="filter-btn" data-filter="city">Cities</button>
+        <button class="filter-btn" data-filter="adventure">Adventure</button>
+    </div>
+
+    <main class="destination-grid" id="destinationGrid"></main>
+
+    <div class="pagination">
+        <button class="page-btn" id="prevPage"><i class="fas fa-chevron-left"></i></button>
+        <span class="page-indicator" id="currentPage">1</span>
+        <button class="page-btn" id="nextPage"><i class="fas fa-chevron-right"></i></button>
+    </div>
+
+    <div class="destination-modal" id="destinationModal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <div class="modal-body"></div>
+        </div>
+    </div>
+
+    <div class="login-modal" id="loginModal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <div class="modal-body">
+                <h2>Login Required</h2>
+                <p>Please login to upload images</p>
+                <div class="auth-actions">
+                    <a href="login.html" class="btn login-btn">Login</a>
+                    <a href="signup.html" class="btn signup-btn">Sign Up</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section about">
+                <h3>About WonderVista</h3>
+                <p>Discover India's most amazing destinations with our expert travel guides.</p>
+            </div>
+            <div class="footer-section links">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#">Travel Guides</a></li>
+                    <li><a href="#">Special Offers</a></li>
+                    <li><a href="#">Travel Insurance</a></li>
+                    <li><a href="#">Blog</a></li>
+                    <li><a href="#">FAQs</a></li>
+                </ul>
+            </div>
+            <div class="footer-section social">
+                <h3>Follow Us</h3>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-pinterest"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2023 WonderVista. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="destination.js"></script>
+</body>
+
+</html>

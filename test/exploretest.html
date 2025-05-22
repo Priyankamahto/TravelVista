@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Restaurants | WonderVista</title>
+    <link rel="stylesheet" href="expstyletest.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+</head>
+
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="logo">🌍 WonderVista</div>
+        <div class="menu-toggle">
+            <i class="fas fa-bars"></i>
+        </div>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="destination.html">Destinations</a></li>
+            <li><a href="shopping.html">Shopping</a></li>
+            <li class="active"><a href="restaurants.html">Restaurants</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="contact.html">Contact</a></li>
+        </ul>
+        <div class="nav-right">
+            <div class="search-container">
+                <div class="search-box">
+                    <input type="text" id="searchInput" placeholder="Search by location..."
+                        aria-label="Search restaurants by location">
+                    <button id="searchButton"><i class="fas fa-search"></i></button>
+                    <div class="search-suggestions" id="searchSuggestions"></div>
+                </div>
+                <button class="btn geo-btn" id="geoLocation" aria-label="Find nearby restaurants">
+                    <i class="fas fa-map-marker-alt"></i> Near Me
+                </button>
+            </div>
+            <div class="auth-buttons">
+                <a href="login.html" class="btn login-btn">Login</a>
+                <a href="signup.html" class="btn signup-btn">Sign Up</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="restaurant-hero">
+        <div class="hero-overlay"></div>
+        <div class="hero-content animate__animated animate__fadeIn">
+            <h1>Discover <span class="highlight">Culinary Delights</span></h1>
+            <p>Explore the finest restaurants from around the world</p>
+            <div class="search-bar">
+                <input type="text" id="heroSearchInput" placeholder="Enter a city or country to find restaurants...">
+                <button id="heroSearchButton">Search</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <div class="restaurant-container">
+        <!-- Cuisine Filters -->
+        <div class="filters-container">
+            <h2 class="section-title">Find by Cuisine</h2>
+            <div class="filters">
+                <button class="filter-btn active" data-filter="all">All</button>
+                <button class="filter-btn" data-filter="italian">
+                    <i class="fas fa-pizza-slice"></i> Italian
+                </button>
+                <button class="filter-btn" data-filter="asian">
+                    <i class="fas fa-utensils"></i> Asian
+                </button>
+                <button class="filter-btn" data-filter="mediterranean">
+                    <i class="fas fa-fish"></i> Mediterranean
+                </button>
+                <button class="filter-btn" data-filter="american">
+                    <i class="fas fa-hamburger"></i> American
+                </button>
+                <button class="filter-btn" data-filter="indian">
+                    <i class="fas fa-pepper-hot"></i> Indian
+                </button>
+            </div>
+        </div>
+
+        <!-- Add Restaurant Banner -->
+        <div class="add-banner animate__animated animate__pulse animate__infinite animate__slower">
+            <div class="banner-content">
+                <div class="banner-text">
+                    <h3><i class="fas fa-lightbulb"></i> Know a Great Restaurant?</h3>
+                    <p>Share your favorite dining spots with our community of travelers</p>
+                </div>
+                <button id="addRestaurantBtn" class="btn add-btn">
+                    <i class="fas fa-plus-circle"></i> Add Restaurant
+                </button>
+            </div>
+        </div>
+
+        <!-- Restaurant Grid -->
+        <main class="restaurant-grid" id="restaurantGrid">
+            <!-- Content will be loaded dynamically -->
+            <div class="loading-spinner">
+                <i class="fas fa-utensils fa-spin"></i>
+                <p>Loading restaurants...</p>
+            </div>
+        </main>
+
+        <!-- Pagination -->
+        <div class="pagination">
+            <button class="page-btn" id="prevPage" disabled>
+                <i class="fas fa-chevron-left"></i>
+            </button>
+            <span class="page-indicator" id="currentPage">1</span>
+            <button class="page-btn" id="nextPage">
+                <i class="fas fa-chevron-right"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- Add Restaurant Modal -->
+    <div class="add-restaurant-modal" id="addRestaurantModal">
+        <div class="modal-content">
+            <span class="close-btn" id="closeAddModal">&times;</span>
+            <div class="modal-header">
+                <h2><i class="fas fa-plus-circle"></i> Add a New Restaurant</h2>
+            </div>
+            <div class="modal-body">
+                <div id="loginPrompt" style="display: none;">
+                    <div class="login-required">
+                        <i class="fas fa-lock"></i>
+                        <h3>Login Required</h3>
+                        <p>You need to be logged in to add a restaurant.</p>
+                        <div class="login-buttons">
+                            <a href="login.html" class="btn login-btn">Login</a>
+                            <a href="signup.html" class="btn signup-btn">Sign Up</a>
+                        </div>
+                    </div>
+                </div>
+                <form id="addRestaurantForm" style="display: none;">
+                    <div class="form-group">
+                        <label for="restaurantName">Restaurant Name*</label>
+                        <input type="text" id="restaurantName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="restaurantLocation">Location (City/Country)*</label>
+                        <input type="text" id="restaurantLocation" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="restaurantCuisine">Cuisine Type*</label>
+                        <select id="restaurantCuisine" required>
+                            <option value="">Select Cuisine</option>
+                            <option value="italian">Italian</option>
+                            <option value="asian">Asian</option>
+                            <option value="mediterranean">Mediterranean</option>
+                            <option value="american">American</option>
+                            <option value="indian">Indian</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="restaurantDescription">Description*</label>
+                        <textarea id="restaurantDescription" rows="3" required
+                            placeholder="Tell us about the restaurant..."></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="restaurantAddress">Full Address*</label>
+                        <textarea id="restaurantAddress" rows="2" required
+                            placeholder="Street, City, Country"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="restaurantPhone">Phone Number</label>
+                        <input type="tel" id="restaurantPhone" placeholder="+1234567890">
+                    </div>
+                    <div class="form-group">
+                        <label for="restaurantWebsite">Website</label>
+                        <input type="url" id="restaurantWebsite" placeholder="https://www.example.com">
+                    </div>
+                    <div class="form-group">
+                        <label for="restaurantMainImage">Main Image*</label>
+                        <div class="image-upload-container">
+                            <div class="image-upload-box" id="mainImageUploadBox">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                                <p>Click to upload main image</p>
+                                <input type="file" id="restaurantMainImage" accept="image/*" required>
+                            </div>
+                            <div class="image-preview" id="mainImagePreview"></div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Menu Items</label>
+                        <div id="menuItems">
+                            <div class="menu-item">
+                                <input type="text" placeholder="Dish name" class="dish-name" required>
+                                <input type="text" placeholder="Price" class="dish-price" required>
+                                <button type="button" class="remove-item"><i class="fas fa-times"></i></button>
+                            </div>
+                        </div>
+                        <button type="button" id="addMenuItem" class="btn add-menu-btn">
+                            <i class="fas fa-plus"></i> Add Menu Item
+                        </button>
+                    </div>
+                    <div class="form-group">
+                        <label for="restaurantImages">Additional Images*</label>
+                        <div class="image-upload-container">
+                            <div class="image-upload-box" id="additionalImagesUploadBox">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                                <p>Drag & drop images or click to browse</p>
+                                <input type="file" id="restaurantImages" multiple accept="image/*" required>
+                            </div>
+                            <div class="image-preview" id="imagePreview"></div>
+                        </div>
+                        <p class="form-note">Minimum 3 photos required (max 10)</p>
+                    </div>
+                    <div class="form-group">
+                        <label for="userType">I am a:</label>
+                        <div class="radio-group">
+                            <label>
+                                <input type="radio" name="userType" value="visitor" checked> Visitor who dined here
+                            </label>
+                            <label>
+                                <input type="radio" name="userType" value="owner"> Business Owner
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" class="btn cancel-btn" id="cancelAddRestaurant">Cancel</button>
+                        <button type="submit" class="btn submit-btn">Submit Restaurant</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section about">
+                <h3>About WonderVista</h3>
+                <p>Discover the world's most amazing culinary experiences with our expert food guides.</p>
+            </div>
+            <div class="footer-section links">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#">Food Guides</a></li>
+                    <li><a href="#">Special Offers</a></li>
+                    <li><a href="#">Popular Cuisines</a></li>
+                    <li><a href="#">Food Blog</a></li>
+                    <li><a href="#">FAQs</a></li>
+                </ul>
+            </div>
+            <div class="footer-section social">
+                <h3>Follow Us</h3>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-pinterest"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2023 WonderVista. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="expscripttest.js"></script>
+</body>
+
+</html>

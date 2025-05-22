@@ -1,0 +1,176 @@
+.restaurant-details {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+}
+
+.restaurant-header {
+    display: flex;
+    gap: 2rem;
+    margin-bottom: 2rem;
+}
+
+.restaurant-header img {
+    width: 500px;
+    height: 350px;
+    object-fit: cover;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.restaurant-info {
+    flex: 1;
+}
+
+.restaurant-info h1 {
+    font-size: 2.5rem;
+    color: var(--dark-color);
+    margin-bottom: 1rem;
+}
+
+.restaurant-meta {
+    display: flex;
+    gap: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.rating {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--accent-color);
+    font-weight: 600;
+}
+
+.price-range {
+    color: var(--dark-color);
+    font-weight: 600;
+}
+
+.location {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #666;
+    margin-bottom: 0.5rem;
+}
+
+.cuisine {
+    color: var(--primary-color);
+    font-weight: 500;
+}
+
+.restaurant-content {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 2rem;
+}
+
+.description {
+    margin-bottom: 2rem;
+}
+
+.description h2,
+.features h2,
+.menu h2,
+.contact-info h2 {
+    font-size: 1.5rem;
+    color: var(--dark-color);
+    margin-bottom: 1rem;
+}
+
+.description p {
+    color: #666;
+    line-height: 1.6;
+}
+
+.features ul,
+.menu ul {
+    list-style: none;
+    padding: 0;
+}
+
+.features li,
+.menu li {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+    color: #666;
+}
+
+.features i {
+    color: var(--primary-color);
+}
+
+.menu li {
+    justify-content: space-between;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid #eee;
+}
+
+.dish-name {
+    font-weight: 500;
+}
+
+.dish-price {
+    color: var(--primary-color);
+    font-weight: 600;
+}
+
+.contact-info p {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #666;
+    margin-bottom: 0.5rem;
+}
+
+.contact-info i {
+    color: var(--primary-color);
+}
+
+.not-found {
+    text-align: center;
+    padding: 4rem 1rem;
+}
+
+.not-found h2 {
+    color: var(--dark-color);
+    margin-bottom: 1rem;
+}
+
+.not-found button {
+    padding: 0.8rem 1.5rem;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.not-found button:hover {
+    background-color: var(--dark-color);
+}
+
+@media (max-width: 1024px) {
+    .restaurant-header {
+        flex-direction: column;
+    }
+
+    .restaurant-header img {
+        width: 100%;
+        height: 300px;
+    }
+}
+
+@media (max-width: 768px) {
+    .restaurant-content {
+        grid-template-columns: 1fr;
+    }
+
+    .restaurant-info h1 {
+        font-size: 2rem;
+    }
+} 

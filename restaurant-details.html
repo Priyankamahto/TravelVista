@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Restaurant Details | WonderVista</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightgallery/2.7.0/css/lightgallery.min.css">
+    <link rel="stylesheet" href="restaurant-details.css">
+</head>
+
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="logo">🌍 WonderVista</div>
+        <div class="menu-toggle" id="mobile-menu">
+            <i class="fas fa-bars"></i>
+        </div>
+        <ul class="nav-links" id="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="destination.html">Destinations</a></li>
+            <li><a href="shopping.html">Shopping</a></li>
+            <li class="active"><a href="restaurants.html">Restaurants</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="contact.html">Contact</a></li>
+        </ul>
+        <div class="nav-right">
+            <div class="auth-buttons">
+                <a href="login.html" class="btn login-btn">Login</a>
+                <a href="signup.html" class="btn signup-btn">Sign Up</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Restaurant Details Container -->
+    <div class="restaurant-details-container" id="restaurantDetails">
+        <!-- Content will be loaded dynamically -->
+        <div class="loading-spinner">
+            <i class="fas fa-utensils fa-spin"></i>
+            <p>Loading restaurant details...</p>
+        </div>
+    </div>
+
+    <!-- Review Modal -->
+    <div class="review-modal" id="reviewModal">
+        <div class="modal-content">
+            <span class="close-btn" id="closeReviewModal">&times;</span>
+            <div class="modal-header">
+                <h2>Share Your Experience</h2>
+                <p>Help others by sharing your dining experience</p>
+            </div>
+            <div class="modal-body">
+                <div id="reviewLoginPrompt" style="display: none;">
+                    <div class="login-required">
+                        <i class="fas fa-lock"></i>
+                        <h3>Login Required</h3>
+                        <p>You need to be logged in to write a review.</p>
+                        <div class="login-buttons">
+                            <a href="login.html" class="btn login-btn">Login</a>
+                            <a href="signup.html" class="btn signup-btn">Sign Up</a>
+                        </div>
+                    </div>
+                </div>
+                <form id="reviewForm">
+                    <div class="form-group">
+                        <label>Your Rating*</label>
+                        <div class="rating-select">
+                            <i class="far fa-star" data-rating="1"></i>
+                            <i class="far fa-star" data-rating="2"></i>
+                            <i class="far fa-star" data-rating="3"></i>
+                            <i class="far fa-star" data-rating="4"></i>
+                            <i class="far fa-star" data-rating="5"></i>
+                        </div>
+                        <input type="hidden" id="ratingValue" value="0" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="reviewTitle">Review Title*</label>
+                        <input type="text" id="reviewTitle" required placeholder="Summarize your experience">
+                    </div>
+                    <div class="form-group">
+                        <label for="reviewText">Your Review*</label>
+                        <textarea id="reviewText" rows="4" required
+                            placeholder="What did you like or dislike?"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="visitDate">Date of Visit*</label>
+                        <input type="date" id="visitDate" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="reviewImages">Upload Photos (Optional)</label>
+                        <div class="image-upload-container">
+                            <div class="image-upload-box">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                                <p>Drag & drop images or click to browse</p>
+                                <input type="file" id="reviewImages" multiple accept="image/*">
+                            </div>
+                            <div class="image-preview" id="reviewImagePreview"></div>
+                        </div>
+                        <p class="form-note">Maximum 5 photos (each under 5MB)</p>
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" class="btn cancel-btn" id="cancelReview">Cancel</button>
+                        <button type="submit" class="btn submit-btn">Submit Review</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section about">
+                <h3>About WonderVista</h3>
+                <p>Discover the world's most amazing culinary experiences with our expert food guides.</p>
+            </div>
+            <div class="footer-section links">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#">Food Guides</a></li>
+                    <li><a href="#">Special Offers</a></li>
+                    <li><a href="#">Popular Cuisines</a></li>
+                    <li><a href="#">Food Blog</a></li>
+                    <li><a href="#">FAQs</a></li>
+                </ul>
+            </div>
+            <div class="footer-section social">
+                <h3>Follow Us</h3>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-pinterest"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2023 WonderVista. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lightgallery/2.7.0/lightgallery.min.js"></script>
+    <script src="restaurant-details.js"></script>
+</body>
+
+</html>

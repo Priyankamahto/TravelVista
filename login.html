@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | WonderVista</title>
+    <link rel="stylesheet" href="expstyle.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="logo">🌍 WonderVista</div>
+        <div class="menu-toggle">
+            <i class="fas fa-bars"></i>
+        </div>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="destination.html">Destinations</a></li>
+            <li><a href="shopping.html">Shopping</a></li>
+            <li><a href="restaurants.html">Restaurants</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="contact.html">Contact</a></li>
+        </ul>
+        <div class="auth-buttons">
+            <a href="login.html" class="btn login-btn">Login</a>
+            <a href="signup.html" class="btn signup-btn">Sign Up</a>
+        </div>
+    </nav>
+
+    <!-- Login Container -->
+    <section class="auth-container">
+        <div class="auth-form">
+            <h2>Welcome Back to WonderVista</h2>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="loginEmail">Email</label>
+                    <input type="email" id="loginEmail" required placeholder="Enter your email">
+                </div>
+
+                <div class="form-group">
+                    <label for="loginPassword">Password</label>
+                    <input type="password" id="loginPassword" required placeholder="Enter your password">
+                </div>
+
+                <div class="form-group">
+                    <label for="userTypeLogin">Account Type</label>
+                    <select id="userTypeLogin" required>
+                        <option value="">Select Account Type</option>
+                        <option value="admin">Admin</option>
+                        <option value="traveler">Traveler</option>
+                        <option value="business">Business Owner</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="btn signup-btn">Login</button>
+
+                <div class="auth-alt">
+                    <span>Or continue with</span>
+                    <button type="button" class="btn google-btn" id="googleLogin">
+                        <i class="fab fa-google"></i> Google
+                    </button>
+                </div>
+
+                <p class="auth-switch">Don't have an account? <a href="signup.html">Sign Up</a></p>
+            </form>
+        </div>
+    </section>
+
+    <!-- Firebase and Scripts -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <script src="expscript.js"></script>
+</body>
+
+</html>
